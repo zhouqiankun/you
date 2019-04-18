@@ -1,7 +1,7 @@
  //获取商品数据
  (function(){
   $.ajax({
-    url:"http://127.0.0.1:3000/sy",
+    url:"sy",
     type:"get",
     //data:"",
     dataType:"json" //自动JSON.parse() 自动转换成数组
