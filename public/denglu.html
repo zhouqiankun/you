@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/denglu.css">
+</head>
+<body>
+  <div id="bg">
+    <div id="zc">
+      <div>
+        <span>用户登陆</span>
+        <span>|</span>
+        <span><a href="register.html">用户注册</a></span>
+      </div>
+      <form id="bd">
+        <ul>
+          <li><input type="text" placeholder="请输入用户名" id="uname"></li><br>
+          <li><input type="password" placeholder="输入8~16位数字或字母" id="upwd"></li><br>
+          <a href="javascript:login();">
+            <input type="button" value="登录" id="btn">
+          </a>
+          
+        </ul>
+      </form>
+      <input type="checkbox" name="agree" checked><span>"已阅读并同意"败家之眼cake协议和隐私保护政策</span>
+    </div>
+  </div>
+  <script src="./js/jquery-3.2.1.js"></script>
+
+  <script>
+  function login(){
+    var btn=document.getElementById("btn");
+      //1.创建异步对象
+      var xhr=new XMLHttpRequest();
+//				console.log('11111');
+      //2.绑定监听
+      xhr.onreadystatechange=function(){
+        if(xhr.readyState==4 && xhr.status==200){
+          var result=xhr.responseText;
+          console.log(result);
+          var div=btn.previousElementSibling;
+          if(result==1){
+            alert("登录成功,请点击'确定',跳转首页 (*╹▽╹*)");
+            setTimeout(function () {
+            window.location.href ='shouye.html';},2000)
+          }else{
+            alert("密码或账号有误 o(╥﹏╥)o");
+          }
+        }
+      }
+      //3.打开连接，创建请求
+      xhr.open('post','/login',true);
+      xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+      var formhtml='uname='+uname.value+'&upwd='+upwd.value;
+      console.log(formhtml);
+      //4.发送请求
+      xhr.send(formhtml);
+      //console.log('5555');
+
+    }
+  </script>
+
+</body>
+</html>

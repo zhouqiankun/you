@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/registr.css">
+</head>
+<body>
+  <div id="bg">
+    <div id="zc">
+      <div>
+        <span><a href="denglu.html">用户登陆</a></span>
+        <span>|</span>
+        <span>用户注册</span>
+      </div>
+      <form id="bd">
+        <ul>
+          <li>
+            <input type="text" placeholder="请输入用户名" id="uname">
+            <div class="yong_3"><!--用户名判断 文字警告 和 OK图片-->
+              <span>3~8个汉字、或下划线的组合</span>
+            </div>
+         </li><br>
+          <li>
+            <input type="password" placeholder="输入8~16位数字或字母" id="upwd">
+            <div class="yong_3"><!--密码判断 文字警告 -->
+              <span>6~20位数字</span>
+            </div>
+          </li><br>
+          <li>
+            <input type="text" placeholder="请输入手机号" id="phone">
+            <div class="yong_3"><!--密码判断 文字警告 -->
+              <span>请输入11位手机号</span>
+           </div>
+          </li><br>
+          <a href="javascript:login();">
+            <input type="button" value="注册" id="btn">
+          </a>
+          
+
+        </ul>
+      </form>
+      <input type="checkbox" name="agree" checked><span>"已阅读并同意"败家之眼cake协议和隐私保护政策</span>
+    </div>
+  </div>
+  <script src="./js/jquery-3.2.1.js"></script>
+
+  <script>
+  //正则表达式
+  var uname=document.getElementById("uname");
+  var upwd=document.getElementById("upwd");
+  var phone=document.getElementById("phone");
+  //console.log(uname);
+  uname.onblur=function(){
+	  vali(this,/^\w{6,15}$/);
+  }
+  function vali(txt,reg){
+    //3.查找要修改的元素
+    var div=uname.nextElementSibling; //用户名的下一个兄弟
+    var span=div.children[0];
+    console.log(div);
+    console.log(span)
+    //4.修改元素
+    if(reg.test(uname.value)==true){
+      div.className="yong_1";
+      span.textContent=""; //把span里面的内容清空
+    }else{
+      div.className="yong_2";
+    }
+  } 
+
+  //验证密码
+  upwd.onblur=function(){
+    Miman(this,/^\d{6,20}$/);
+  }
+  function Miman(txt,reg){
+    //查找要修改的元素
+    var div=upwd.nextElementSibling; //密码的下一个兄弟
+    var span=div.children[0];
+    //修改元素
+    if(reg.test(upwd.value)==true){
+      div.className="yong_1";
+      span.textContent=""; //把span里面的内容清空
+    }else{
+      div.className="yong_4";
+    }
+  }
+  
+  //验证手机号
+  phone.onblur=function(){
+    Shouji(this,/^1[3-8]\d{9}$/);
+  }
+  function Shouji(txt,reg){
+    //查找要修改的元素
+    var div=phone.nextElementSibling; //密码的下一个兄弟
+    var span=div.children[0];
+    //修改元素
+    if(reg.test(phone.value)==true){
+      div.className="yong_1";
+      span.textContent=""; //把span里面的内容清空
+    }else{
+      div.className="yong_5";
+    }
+  }
+
+  //注册
+  function login(){
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState==4 && xhr.status==200){
+        var result=xhr.responseText;
+        console.log(result);
+        if(result==1){
+          alert("注册成功,请点击'确定'进行登录 (*╹▽╹*)");
+          setTimeout(function () {
+          window.location.href ='denglu.html';},3000)  
+        }
+      }
+    }
+    var url='/asus_user';
+    xhr.open('post',url,true);
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    var formdata='uname='+uname.value+'&upwd='+upwd.value+'&phone='+phone.value;
+		xhr.send(formdata);
+  }
+  </script>
+</body>
+</html>
